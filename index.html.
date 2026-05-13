@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carré VIP - Mini App</title>
+    <!-- On importe le script Telegram -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            color: #d4af37; /* Couleur Or */
+            font-family: sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container { padding: 20px; border: 2px solid #d4af37; border-radius: 15px; }
+        button {
+            background: #d4af37;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CARRÉ VIP</h1>
+        <p id="user-greeting">Bienvenue</p>
+        <button onclick="tgAction()">ENTRER DANS LE CLUB</button>
+    </div>
+
+    <script>
+        // Initialisation de la Mini App
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Ouvre l'app en plein écran
+
+        // Afficher le nom de l'utilisateur
+        if (tg.initDataUnsafe.user) {
+            document.getElementById('user-greeting').innerText = "Bienvenue, " + tg.initDataUnsafe.user.first_name;
+        }
+
+        function tgAction() {
+            tg.sendData("L'utilisateur a cliqué sur Entrer"); // Envoie un message au bot
+            tg.close(); // Ferme la mini app
+        }
+    </script>
+</body>
+</html>
