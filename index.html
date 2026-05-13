@@ -18,57 +18,56 @@
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Vidéo en arrière-plan */
-        #bg-video {
+        /* Image d'arrière-plan */
+        .bg-image {
             position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -100;
+            background-image: url('IMG_6840.png');
             background-size: cover;
-            object-fit: cover;
+            background-position: center;
         }
 
-        /* Overlay sombre pour la lisibilité */
+        /* Overlay sombre pour faire ressortir le bouton */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
             z-index: -1;
         }
 
-        /* Conteneur principal */
+        /* Conteneur du bouton */
         .content {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
             height: 100%;
-            padding-bottom: 50px; /* Espace pour le bouton en bas */
+            padding-bottom: 60px; 
         }
 
-        /* Bouton Menu Stylé */
+        /* Bouton Menu Premium */
         .menu-btn {
             background: linear-gradient(45deg, #d4af37, #f9e27d);
             color: #000;
             border: none;
-            padding: 18px 40px;
+            padding: 20px 0;
             font-size: 18px;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
             border-radius: 50px;
             letter-spacing: 2px;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             cursor: pointer;
             transition: transform 0.2s;
-            width: 80%;
-            max-width: 300px;
+            width: 85%;
+            max-width: 320px;
         }
 
         .menu-btn:active {
@@ -78,10 +77,7 @@
 </head>
 <body>
 
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="NOM_DE_TA_VIDEO.mp4" type="video/mp4">
-    </video>
-
+    <div class="bg-image"></div>
     <div class="overlay"></div>
 
     <div class="content">
@@ -90,17 +86,15 @@
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Force l'ouverture en grand
+        tg.expand();
 
-        // On ajuste les couleurs de l'UI Telegram
         tg.setHeaderColor('#000000');
         tg.setBackgroundColor('#000000');
 
         function openMenu() {
-            // Ici tu peux envoyer une info à ton bot pour qu'il affiche le menu
-            tg.sendData("open_menu"); 
-            // Ou simplement fermer l'app si tu veux que le bot prenne le relais en chat
-            // tg.close(); 
+            // Envoie l'info au bot et ferme la mini app
+            tg.sendData("open_menu");
+            tg.close();
         }
     </script>
 </body>
