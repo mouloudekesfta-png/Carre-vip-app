@@ -31,110 +31,78 @@
             z-index: 100; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .overlay-home {
-            position: absolute; top: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.85) 100%);
-        }
-
         .enter-btn {
             position: relative; z-index: 101;
             background: linear-gradient(45deg, var(--gold), #f9e27d);
             color: #000; border: none; padding: 22px 0; width: 85%;
             border-radius: 50px; font-weight: 900; text-transform: uppercase;
-            margin-bottom: 60px; letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
-            cursor: pointer;
+            margin-bottom: 60px; box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
 
-        /* --- PAGE MENU / SHOP --- */
+        /* --- PAGE SHOP --- */
         #menu-page {
             display: none; padding: 20px 15px;
             background: radial-gradient(circle at top right, #1a0b2e, #050505);
             min-height: 100vh;
         }
 
-        .shop-header { text-align: center; margin: 10px 0 30px 0; }
-        .shop-header h1 { 
-            color: var(--gold); margin: 0; font-size: 28px; 
-            letter-spacing: 4px; font-weight: 900;
-        }
+        .shop-header h1 { color: var(--gold); text-align: center; letter-spacing: 4px; margin-bottom: 30px; }
 
-        .search-box {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px; padding: 14px; margin-bottom: 25px;
-            backdrop-filter: blur(10px); color: #888; font-size: 14px;
-        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-bottom: 100px; }
 
-        .grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 15px; padding-bottom: 100px;
-        }
-
-        /* --- CARTE PRODUIT --- */
         .card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px; overflow: hidden;
-            backdrop-filter: blur(10px);
-            display: flex; flex-direction: column;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 20px; overflow: hidden; backdrop-filter: blur(10px);
         }
 
-        .card-img {
-            width: 100%; height: 130px;
-            background-size: cover; background-position: center;
-            border-bottom: 1px solid var(--glass-border);
-        }
+        .card-img { width: 100%; height: 130px; background-size: cover; background-position: center; }
 
         .card-body { padding: 12px; }
-
-        .card-tag {
-            background: var(--purple); font-size: 9px;
-            padding: 3px 8px; border-radius: 4px;
-            text-transform: uppercase; font-weight: bold;
-        }
-
+        .card-tag { background: var(--purple); font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
         .card-title { font-size: 15px; font-weight: 700; margin: 10px 0 5px 0; }
-        .card-desc { font-size: 11px; color: #bbb; line-height: 1.3; height: 30px; overflow: hidden; }
-        .card-price { color: var(--gold); font-weight: 800; font-size: 16px; margin-top: 10px; }
+        .card-price { color: var(--gold); font-weight: 800; }
 
         .buy-btn {
-            background: rgba(255,255,255,0.05); color: white;
-            border: 1px solid var(--glass-border); width: 100%;
-            padding: 10px; border-radius: 12px; margin-top: 12px;
-            font-size: 12px; font-weight: 600;
+            background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--glass-border);
+            width: 100%; padding: 10px; border-radius: 12px; margin-top: 12px; font-size: 12px;
         }
 
-        /* --- NAVIGATION BAS --- */
-        .nav-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
-            display: flex; justify-content: space-around;
-            padding: 15px 0; border-top: 1px solid var(--glass-border);
-            z-index: 1000;
+        /* --- MODALE PRODUIT --- */
+        #product-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; backdrop-filter: blur(15px);
         }
-        .nav-item { font-size: 11px; color: #555; font-weight: 600; }
+
+        .modal-content {
+            padding: 20px; display: flex; flex-direction: column; align-items: center;
+        }
+
+        .modal-img { width: 100%; height: 250px; border-radius: 20px; background-size: cover; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+
+        .modal-desc { color: #ccc; text-align: center; margin: 15px 0; line-height: 1.5; }
+
+        .variant-select {
+            background: #111; color: white; border: 1px solid var(--glass-border);
+            width: 100%; padding: 15px; border-radius: 12px; margin-top: 20px;
+        }
+
+        .close-modal { position: absolute; top: 20px; left: 20px; color: var(--gold); font-weight: bold; }
+
+        /* --- NAV BAS --- */
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5,5,5,0.9); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid var(--glass-border); z-index: 1000; }
+        .nav-item { font-size: 11px; color: #555; }
         .nav-item.active { color: var(--gold); }
     </style>
 </head>
 <body>
 
     <div id="home-page">
-        <div class="overlay-home"></div>
         <button class="enter-btn" onclick="openShop()">Entrer dans le Carré</button>
     </div>
 
     <div id="menu-page">
-        <div class="shop-header">
-            <h1>CARRÉ VIP</h1>
-            <div style="font-size: 10px; color: var(--purple); letter-spacing: 2px;">PREMIUM SELECTION</div>
-        </div>
-
-        <div class="search-box">🔍 Rechercher un produit...</div>
-
-        <div class="grid" id="main-grid">
-            </div>
-
+        <div class="shop-header"><h1>CARRÉ VIP</h1></div>
+        <div class="grid" id="main-grid"></div>
         <div class="nav-bar">
             <div class="nav-item active">BOUTIQUE</div>
             <div class="nav-item">AVIS</div>
@@ -143,33 +111,31 @@
         </div>
     </div>
 
+    <div id="product-modal">
+        <div class="close-modal" onclick="closeModal()">✕ RETOUR</div>
+        <div class="modal-content" id="modal-body">
+            </div>
+    </div>
+
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        tg.setHeaderColor('#050505');
 
-        // --- TES 3 PRODUITS ---
         const products = [
             {
-                name: "Blue Elephant 🐘",
-                price: "40.00€",
-                desc: "Indica dominante, génétique d'exception.",
-                img: "IMG_6840.png", // Remplace par ta photo Blue Elephant
-                tag: "Espagne 🇪🇸"
+                id: 1, name: "Blue Elephant 🐘", price: "40€",
+                tag: "Espagne 🇪🇸", img: "IMG_6840.png",
+                desc: "Une génétique d'exception. Un goût terreux et puissant, idéal pour les amateurs d'Indica pure."
             },
             {
-                name: "Super Mousseux",
-                price: "20.00€",
-                desc: "Texture parfaite, jaune mousseux sucré.",
-                img: "IMG_6840.png", // Remplace par ta photo Mousseux
-                tag: "Mousse 🧀"
+                id: 2, name: "Super Mousseux", price: "20€",
+                tag: "Mousse 🧀", img: "IMG_6840.png",
+                desc: "Le classique indémodable. Texture mousseuse, sucrée en bouche et un effet relaxant immédiat."
             },
             {
-                name: "Filtre x3 Static",
-                price: "50.00€",
-                desc: "Filtration à froid, pureté maximale.",
-                img: "IMG_6840.png", // Remplace par ta photo Static
-                tag: "Static 💎"
+                id: 3, name: "Filtre x3 Static", price: "50€",
+                tag: "Static 💎", img: "IMG_6840.png",
+                desc: "Le haut de gamme absolu. Filtration à froid 'Static Sift' pour une pureté et une puissance inégalées."
             }
         ];
 
@@ -183,14 +149,31 @@
                         <div class="card-body">
                             <span class="card-tag">${p.tag}</span>
                             <div class="card-title">${p.name}</div>
-                            <div class="card-desc">${p.desc}</div>
-                            <div class="card-price">${p.price}</div>
-                            <button class="buy-btn" onclick="order('${p.name}')">Voir produit</button>
+                            <div class="card-price">À partir de ${p.price}</div>
+                            <button class="buy-btn" onclick="openProduct(${p.id})">Voir produit</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
         }
+
+        function openProduct(id) {
+            const p = products.find(item => item.id === id);
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="modal-img" style="background-image: url('${p.img}')"></div>
+                <h2 style="color:var(--gold)">${p.name}</h2>
+                <p class="modal-desc">${p.desc}</p>
+                <select class="variant-select">
+                    <option>Sélectionnez une variante</option>
+                    <option>5g - ${p.price}</option>
+                    <option>10g - Voir tarif</option>
+                </select>
+                <button class="enter-btn" style="margin-top:30px; width:100%" onclick="addToCart('${p.name}')">Ajouter au panier</button>
+            `;
+            document.getElementById('product-modal').style.display = 'block';
+        }
+
+        function closeModal() { document.getElementById('product-modal').style.display = 'none'; }
 
         function openShop() {
             document.getElementById('home-page').style.transform = 'translateY(-100%)';
@@ -198,13 +181,14 @@
                 document.getElementById('home-page').style.display = 'none';
                 document.getElementById('menu-page').style.display = 'block';
                 loadProducts();
-                tg.MainButton.setText("FINALISER LA COMMANDE").show();
             }, 600);
         }
 
-        function order(productName) {
-            tg.sendData("Selection: " + productName);
-            tg.showAlert("Tu as sélectionné : " + productName);
+        function addToCart(name) {
+            tg.sendData("Commande: " + name);
+            tg.showConfirm("Ajouter " + name + " au panier ?", (ok) => {
+                if(ok) closeModal();
+            });
         }
     </script>
 </body>
