@@ -3,92 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Carré VIP</title>
+    <title>Carré VIP - Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0c0c0c;
+            --card-bg: #1a1a1a;
+        }
+
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
             background-color: #000;
-            overflow: hidden;
-            font-family: 'Arial Black', sans-serif;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Image de fond */
-        .bg-img {
+        /* --- SECTION 1 : ACCUEIL --- */
+        #home-page {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('IMG_6840.png');
-            background-size: cover;
-            background-position: center;
-            z-index: 1; /* Derrière */
+            width: 100%; height: 100%;
+            background: url('IMG_6840.png') center/cover no-repeat;
+            display: flex; flex-direction: column;
+            justify-content: flex-end; align-items: center;
+            z-index: 10;
+            transition: transform 0.5s ease-in-out;
         }
 
-        /* Voile sombre pour le contraste */
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
-            z-index: 2; /* Au-dessus de l'image */
+            position: absolute; top: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
         }
 
-        /* Conteneur du bouton */
-        .button-container {
-            position: fixed;
-            bottom: 40px; /* À 40px du bas */
-            left: 50%;
-            transform: translateX(-50%); /* Centrage horizontal parfait */
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 999; /* Au-dessus de TOUT */
+        .enter-btn {
+            position: relative; z-index: 11;
+            background: linear-gradient(45deg, var(--gold), #f9e27d);
+            color: #000; border: none;
+            padding: 20px 0; width: 85%; max-width: 350px;
+            border-radius: 50px; font-weight: 900;
+            text-transform: uppercase; margin-bottom: 60px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .menu-btn {
-            background: linear-gradient(45deg, #d4af37, #f9e27d);
-            color: #000;
-            border: none;
-            padding: 22px 0;
-            font-size: 16px;
-            font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 50px;
-            width: 80%;
-            max-width: 320px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
-            cursor: pointer;
-            letter-spacing: 1px;
+        /* --- SECTION 2 : MENU CATALOGUE --- */
+        #menu-page {
+            display: none; /* Caché au début */
+            padding: 20px;
+            background-color: var(--dark-bg);
+            min-height: 100vh;
         }
 
-        .menu-btn:active {
-            transform: scale(0.96);
+        .search-bar {
+            background: #222; border: none;
+            width: 100%; padding: 12px;
+            border-radius: 10px; color: white;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding-bottom: 80px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .product-img {
+            width: 100%; height: 120px;
+            background: #333; object-fit: cover;
+        }
+
+        .product-info { padding: 10px; }
+        .product-title { font-size: 14px; font-weight: bold; margin: 5px 0; }
+        .product-price { color: var(--gold); font-weight: bold; }
+
+        .buy-btn {
+            background: #333; color: white; border: none;
+            width: 100%; padding: 8px; border-radius: 8px;
+            margin-top: 10px; font-size: 12px;
+        }
+
+        /* Navigation du bas */
+        .nav-bottom {
+            position: fixed; bottom: 0; left: 0;
+            width: 100%; background: #111;
+            display: flex; justify-content: space-around;
+            padding: 15px 0; border-top: 1px solid #333;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-img"></div>
-    <div class="overlay"></div>
+    <div id="home-page">
+        <div class="overlay"></div>
+        <button class="enter-btn" onclick="showMenu()">Accéder au Menu</button>
+    </div>
 
-    <div class="button-container">
-        <button class="menu-btn" onclick="openMenu()">Entrer dans le Carré</button>
+    <div id="menu-page">
+        <input type="text" class="search-bar" placeholder="Rechercher un produit...">
+        
+        <div class="grid">
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('TON_IMAGE_1.png'); background-size: cover;"></div>
+                <div class="product-info">
+                    <div class="product-title">Super Mousseux</div>
+                    <div class="product-price">20.00€</div>
+                    <button class="buy-btn" onclick="alert('Ajouté !')">Voir le produit</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('TON_IMAGE_2.png'); background-size: cover;"></div>
+                <div class="product-info">
+                    <div class="product-title">Blue Elephant</div>
+                    <div class="product-price">40.00€</div>
+                    <button class="buy-btn" onclick="alert('Ajouté !')">Voir le produit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-bottom">
+            <span>Produits</span>
+            <span>Infos</span>
+            <span>Panier</span>
+        </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        function openMenu() {
-            tg.sendData("open_menu");
-            tg.close();
+        function showMenu() {
+            // Animation : On fait monter la page d'accueil et on affiche le menu
+            document.getElementById('home-page').style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                document.getElementById('home-page').style.display = 'none';
+                document.getElementById('menu-page').style.display = 'block';
+                tg.MainButton.setText("VOIR LE PANIER").show();
+            }, 500);
         }
     </script>
 </body>
