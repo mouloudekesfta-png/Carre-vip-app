@@ -2,55 +2,105 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carré VIP - Mini App</title>
-    <!-- On importe le script Telegram -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carré VIP - Accès</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
+        * { box-sizing: border-box; }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background-color: #000;
-            color: #d4af37; /* Couleur Or */
-            font-family: sans-serif;
-            text-align: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* Vidéo en arrière-plan */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+            object-fit: cover;
+        }
+
+        /* Overlay sombre pour la lisibilité */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            z-index: -1;
+        }
+
+        /* Conteneur principal */
+        .content {
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            height: 100%;
+            padding-bottom: 50px; /* Espace pour le bouton en bas */
         }
-        .container { padding: 20px; border: 2px solid #d4af37; border-radius: 15px; }
-        button {
-            background: #d4af37;
-            color: black;
+
+        /* Bouton Menu Stylé */
+        .menu-btn {
+            background: linear-gradient(45deg, #d4af37, #f9e27d);
+            color: #000;
             border: none;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 5px;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 50px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
             cursor: pointer;
+            transition: transform 0.2s;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CARRÉ VIP</h1>
-        <p id="user-greeting">Bienvenue</p>
-        <button onclick="tgAction()">ENTRER DANS LE CLUB</button>
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="NOM_DE_TA_VIDEO.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="content">
+        <button class="menu-btn" onclick="openMenu()">Accéder au Menu</button>
     </div>
 
     <script>
-        // Initialisation de la Mini App
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Ouvre l'app en plein écran
+        tg.expand(); // Force l'ouverture en grand
 
-        // Afficher le nom de l'utilisateur
-        if (tg.initDataUnsafe.user) {
-            document.getElementById('user-greeting').innerText = "Bienvenue, " + tg.initDataUnsafe.user.first_name;
-        }
+        // On ajuste les couleurs de l'UI Telegram
+        tg.setHeaderColor('#000000');
+        tg.setBackgroundColor('#000000');
 
-        function tgAction() {
-            tg.sendData("L'utilisateur a cliqué sur Entrer"); // Envoie un message au bot
-            tg.close(); // Ferme la mini app
+        function openMenu() {
+            // Ici tu peux envoyer une info à ton bot pour qu'il affiche le menu
+            tg.sendData("open_menu"); 
+            // Ou simplement fermer l'app si tu veux que le bot prenne le relais en chat
+            // tg.close(); 
         }
     </script>
 </body>
