@@ -3,181 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Carré VIP - Shop</title>
+    <title>CARRÉ VIP - Premium Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --gold: #d4af37;
-            --dark-bg: #0c0c0c;
-            --card-bg: #1a1a1a;
+            --purple: #8a2be2;
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.12);
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
-            background-color: #000;
+            background-color: #050505;
             color: white;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow-x: hidden;
         }
 
-        /* --- SECTION 1 : ACCUEIL --- */
+        /* --- PAGE ACCUEIL --- */
         #home-page {
-            position: fixed;
-            width: 100%; height: 100%;
+            position: fixed; width: 100%; height: 100%;
             background: url('IMG_6840.png') center/cover no-repeat;
             display: flex; flex-direction: column;
             justify-content: flex-end; align-items: center;
-            z-index: 10;
-            transition: transform 0.5s ease-in-out;
+            z-index: 100; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .overlay {
+        .overlay-home {
             position: absolute; top: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
+            background: linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.85) 100%);
         }
 
         .enter-btn {
-            position: relative; z-index: 11;
+            position: relative; z-index: 101;
             background: linear-gradient(45deg, var(--gold), #f9e27d);
-            color: #000; border: none;
-            padding: 20px 0; width: 85%; max-width: 350px;
-            border-radius: 50px; font-weight: 900;
-            text-transform: uppercase; margin-bottom: 60px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            color: #000; border: none; padding: 22px 0; width: 85%;
+            border-radius: 50px; font-weight: 900; text-transform: uppercase;
+            margin-bottom: 60px; letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            cursor: pointer;
         }
 
-        /* --- SECTION 2 : MENU CATALOGUE --- */
+        /* --- PAGE MENU / SHOP --- */
         #menu-page {
-            display: none; /* Caché au début */
-            padding: 20px;
-            background-color: var(--dark-bg);
+            display: none; padding: 20px 15px;
+            background: radial-gradient(circle at top right, #1a0b2e, #050505);
             min-height: 100vh;
         }
 
-        .search-bar {
-            background: #222; border: none;
-            width: 100%; padding: 12px;
-            border-radius: 10px; color: white;
-            margin-bottom: 20px;
+        .shop-header { text-align: center; margin: 10px 0 30px 0; }
+        .shop-header h1 { 
+            color: var(--gold); margin: 0; font-size: 28px; 
+            letter-spacing: 4px; font-weight: 900;
+        }
+
+        .search-box {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px; padding: 14px; margin-bottom: 25px;
+            backdrop-filter: blur(10px); color: #888; font-size: 14px;
         }
 
         .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            padding-bottom: 80px;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 15px; padding-bottom: 100px;
         }
 
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #333;
+        /* --- CARTE PRODUIT --- */
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px; overflow: hidden;
+            backdrop-filter: blur(10px);
+            display: flex; flex-direction: column;
         }
 
-        .product-img {
-            width: 100%; height: 120px;
-            background: #333; object-fit: cover;
+        .card-img {
+            width: 100%; height: 130px;
+            background-size: cover; background-position: center;
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .product-info { padding: 10px; }
-        .product-title { font-size: 14px; font-weight: bold; margin: 5px 0; }
-        .product-price { color: var(--gold); font-weight: bold; }
+        .card-body { padding: 12px; }
+
+        .card-tag {
+            background: var(--purple); font-size: 9px;
+            padding: 3px 8px; border-radius: 4px;
+            text-transform: uppercase; font-weight: bold;
+        }
+
+        .card-title { font-size: 15px; font-weight: 700; margin: 10px 0 5px 0; }
+        .card-desc { font-size: 11px; color: #bbb; line-height: 1.3; height: 30px; overflow: hidden; }
+        .card-price { color: var(--gold); font-weight: 800; font-size: 16px; margin-top: 10px; }
 
         .buy-btn {
-            background: #333; color: white; border: none;
-            width: 100%; padding: 8px; border-radius: 8px;
-            margin-top: 10px; font-size: 12px;
+            background: rgba(255,255,255,0.05); color: white;
+            border: 1px solid var(--glass-border); width: 100%;
+            padding: 10px; border-radius: 12px; margin-top: 12px;
+            font-size: 12px; font-weight: 600;
         }
 
-        /* Navigation du bas */
-        .nav-bottom {
-            position: fixed; bottom: 0; left: 0;
-            width: 100%; background: #111;
+        /* --- NAVIGATION BAS --- */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
             display: flex; justify-content: space-around;
-            padding: 15px 0; border-top: 1px solid #333;
+            padding: 15px 0; border-top: 1px solid var(--glass-border);
+            z-index: 1000;
         }
+        .nav-item { font-size: 11px; color: #555; font-weight: 600; }
+        .nav-item.active { color: var(--gold); }
     </style>
 </head>
 <body>
 
     <div id="home-page">
-        <div class="overlay"></div>
-        <button class="enter-btn" onclick="showMenu()">Accéder au Menu</button>
+        <div class="overlay-home"></div>
+        <button class="enter-btn" onclick="openShop()">Entrer dans le Carré</button>
     </div>
 
     <div id="menu-page">
-        <input type="text" class="search-bar" placeholder="Rechercher un produit...">
-        
-        <div class="grid">
-            <div class="product-card">
-                <div class="product-img" style="background-image: url('TON_IMAGE_1.png'); background-size: cover;"></div>
-                <div class="product-info">
-                    <div class="product-title">Super Mousseux</div>
-                    <div class="product-price">20.00€</div>
-                    <button class="buy-btn" onclick="alert('Ajouté !')">Voir le produit</button>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="product-img" style="background-image: url('TON_IMAGE_2.png'); background-size: cover;"></div>
-                <div class="product-info">
-                    <div class="product-title">Blue Elephant</div>
-                    <div class="product-price">40.00€</div>
-                    <button class="buy-btn" onclick="alert('Ajouté !')">Voir le produit</button>
-                </div>
-            </div>
+        <div class="shop-header">
+            <h1>CARRÉ VIP</h1>
+            <div style="font-size: 10px; color: var(--purple); letter-spacing: 2px;">PREMIUM SELECTION</div>
         </div>
 
-        <div class="nav-bottom">
-            <span>Produits</span>
-            <span>Infos</span>
-            <span>Panier</span>
+        <div class="search-box">🔍 Rechercher un produit...</div>
+
+        <div class="grid" id="main-grid">
+            </div>
+
+        <div class="nav-bar">
+            <div class="nav-item active">BOUTIQUE</div>
+            <div class="nav-item">AVIS</div>
+            <div class="nav-item">INFOS</div>
+            <div class="nav-item">PANIER</div>
         </div>
     </div>
 
     <script>
-             // --- BASE DE DONNÉES DE TA BOUTIQUE ACTUELLE ---
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.setHeaderColor('#050505');
+
+        // --- TES 3 PRODUITS ---
         const products = [
             {
                 name: "Blue Elephant 🐘",
                 price: "40.00€",
-                desc: "Indica dominante, génétique d'exception issue de...",
-                image: "IMG_6840.png", // Pense à uploader la photo de la Blue Elephant
-                tag: "Espagne 🇪🇸 🐘"
+                desc: "Indica dominante, génétique d'exception.",
+                img: "IMG_6840.png", // Remplace par ta photo Blue Elephant
+                tag: "Espagne 🇪🇸"
             },
             {
                 name: "Super Mousseux",
                 price: "20.00€",
-                desc: "Un jaune mousseux sucré qui fait bien le taff.",
-                image: "IMG_6840.png", // Pense à uploader la photo du Mousseux
+                desc: "Texture parfaite, jaune mousseux sucré.",
+                img: "IMG_6840.png", // Remplace par ta photo Mousseux
                 tag: "Mousse 🧀"
             },
             {
                 name: "Filtre x3 Static",
                 price: "50.00€",
-                desc: "Qualité premium, filtration à froid pour un maximum de pureté.",
-                image: "IMG_6840.png", // Pense à uploader la photo du Static
+                desc: "Filtration à froid, pureté maximale.",
+                img: "IMG_6840.png", // Remplace par ta photo Static
                 tag: "Static 💎"
             }
         ];
 
-        // Fonction pour générer les cartes de tes 3 produits
         function loadProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = ""; // On vide la grille avant de charger
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = "";
             products.forEach(p => {
                 grid.innerHTML += `
                     <div class="card">
-                        <div class="card-img" style="background-image: url('${p.image}')"></div>
-                        <div class="card-content">
-                            <span class="tag">${p.tag}</span>
-                            <div class="title">${p.name}</div>
-                            <div class="desc">${p.desc}</div>
-                            <div class="price">À partir de ${p.price}</div>
-                            <button class="view-btn">Voir le produit</button>
+                        <div class="card-img" style="background-image: url('${p.img}')"></div>
+                        <div class="card-body">
+                            <span class="card-tag">${p.tag}</span>
+                            <div class="card-title">${p.name}</div>
+                            <div class="card-desc">${p.desc}</div>
+                            <div class="card-price">${p.price}</div>
+                            <button class="buy-btn" onclick="order('${p.name}')">Voir produit</button>
                         </div>
                     </div>
                 `;
             });
         }
+
+        function openShop() {
+            document.getElementById('home-page').style.transform = 'translateY(-100%)';
+            setTimeout(() => {
+                document.getElementById('home-page').style.display = 'none';
+                document.getElementById('menu-page').style.display = 'block';
+                loadProducts();
+                tg.MainButton.setText("FINALISER LA COMMANDE").show();
+            }, 600);
+        }
+
+        function order(productName) {
+            tg.sendData("Selection: " + productName);
+            tg.showAlert("Tu as sélectionné : " + productName);
+        }
+    </script>
+</body>
+</html>
