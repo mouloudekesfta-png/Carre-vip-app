@@ -11,12 +11,13 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            background-color: #0c0c0c; /* Couleur de secours si l'image ne charge pas */
+            background-color: #000;
             overflow: hidden;
-            font-family: sans-serif;
+            font-family: 'Arial Black', sans-serif;
         }
 
-        .bg {
+        /* Image de fond */
+        .bg-img {
             position: fixed;
             top: 0;
             left: 0;
@@ -25,53 +26,60 @@
             background-image: url('IMG_6840.png');
             background-size: cover;
             background-position: center;
-            z-index: 1;
+            z-index: 1; /* Derrière */
         }
 
+        /* Voile sombre pour le contraste */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Assombrit un peu l'image */
-            z-index: 2;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
+            z-index: 2; /* Au-dessus de l'image */
         }
 
-        .content {
-            position: relative;
-            z-index: 3;
+        /* Conteneur du bouton */
+        .button-container {
+            position: fixed;
+            bottom: 40px; /* À 40px du bas */
+            left: 50%;
+            transform: translateX(-50%); /* Centrage horizontal parfait */
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            height: 100vh;
-            padding-bottom: 80px;
+            justify-content: center;
+            z-index: 999; /* Au-dessus de TOUT */
         }
 
         .menu-btn {
             background: linear-gradient(45deg, #d4af37, #f9e27d);
             color: #000;
             border: none;
-            padding: 20px;
-            font-size: 18px;
+            padding: 22px 0;
+            font-size: 16px;
             font-weight: 900;
             text-transform: uppercase;
             border-radius: 50px;
-            width: 85%;
-            max-width: 350px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+            width: 80%;
+            max-width: 320px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.8);
             cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.96);
         }
     </style>
 </head>
 <body>
 
-    <div class="bg"></div>
+    <div class="bg-img"></div>
     <div class="overlay"></div>
 
-    <div class="content">
-        <button class="menu-btn" onclick="openMenu()">Accéder au Menu</button>
+    <div class="button-container">
+        <button class="menu-btn" onclick="openMenu()">Entrer dans le Carré</button>
     </div>
 
     <script>
