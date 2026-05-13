@@ -137,18 +137,47 @@
     </div>
 
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+             // --- BASE DE DONNÉES DE TA BOUTIQUE ACTUELLE ---
+        const products = [
+            {
+                name: "Blue Elephant 🐘",
+                price: "40.00€",
+                desc: "Indica dominante, génétique d'exception issue de...",
+                image: "IMG_6840.png", // Pense à uploader la photo de la Blue Elephant
+                tag: "Espagne 🇪🇸 🐘"
+            },
+            {
+                name: "Super Mousseux",
+                price: "20.00€",
+                desc: "Un jaune mousseux sucré qui fait bien le taff.",
+                image: "IMG_6840.png", // Pense à uploader la photo du Mousseux
+                tag: "Mousse 🧀"
+            },
+            {
+                name: "Filtre x3 Static",
+                price: "50.00€",
+                desc: "Qualité premium, filtration à froid pour un maximum de pureté.",
+                image: "IMG_6840.png", // Pense à uploader la photo du Static
+                tag: "Static 💎"
+            }
+        ];
 
-        function showMenu() {
-            // Animation : On fait monter la page d'accueil et on affiche le menu
-            document.getElementById('home-page').style.transform = 'translateY(-100%)';
-            setTimeout(() => {
-                document.getElementById('home-page').style.display = 'none';
-                document.getElementById('menu-page').style.display = 'block';
-                tg.MainButton.setText("VOIR LE PANIER").show();
-            }, 500);
+        // Fonction pour générer les cartes de tes 3 produits
+        function loadProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = ""; // On vide la grille avant de charger
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <div class="card-img" style="background-image: url('${p.image}')"></div>
+                        <div class="card-content">
+                            <span class="tag">${p.tag}</span>
+                            <div class="title">${p.name}</div>
+                            <div class="desc">${p.desc}</div>
+                            <div class="price">À partir de ${p.price}</div>
+                            <button class="view-btn">Voir le produit</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
-    </script>
-</body>
-</html>
