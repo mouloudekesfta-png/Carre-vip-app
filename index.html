@@ -60,33 +60,30 @@
         .card-body { padding: 12px; }
         .card-tag { background: var(--purple); font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
         .card-title { font-size: 15px; font-weight: 700; margin: 10px 0 5px 0; }
-        .card-price { color: var(--gold); font-weight: 800; }
-
-        .buy-btn {
-            background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--glass-border);
-            width: 100%; padding: 10px; border-radius: 12px; margin-top: 12px; font-size: 12px;
-        }
+        .card-price { color: var(--gold); font-weight: 800; font-size: 14px; }
 
         /* --- MODALE PRODUIT --- */
         #product-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000; backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.95); z-index: 2000; backdrop-filter: blur(15px);
+            overflow-y: auto;
         }
 
         .modal-content {
             padding: 20px; display: flex; flex-direction: column; align-items: center;
+            padding-bottom: 50px;
         }
 
         .modal-img { width: 100%; height: 250px; border-radius: 20px; background-size: cover; margin-bottom: 20px; border: 1px solid var(--glass-border); }
 
-        .modal-desc { color: #ccc; text-align: center; margin: 15px 0; line-height: 1.5; }
+        .modal-desc { color: #ccc; text-align: left; width: 100%; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
 
         .variant-select {
             background: #111; color: white; border: 1px solid var(--glass-border);
-            width: 100%; padding: 15px; border-radius: 12px; margin-top: 20px;
+            width: 100%; padding: 15px; border-radius: 12px; margin-top: 20px; font-size: 16px;
         }
 
-        .close-modal { position: absolute; top: 20px; left: 20px; color: var(--gold); font-weight: bold; }
+        .close-modal { position: sticky; top: 0; padding: 20px; background: rgba(0,0,0,0.5); width: 100%; color: var(--gold); font-weight: bold; z-index: 2001; cursor: pointer; }
 
         /* --- NAV BAS --- */
         .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5,5,5,0.9); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid var(--glass-border); z-index: 1000; }
@@ -113,8 +110,7 @@
 
     <div id="product-modal">
         <div class="close-modal" onclick="closeModal()">✕ RETOUR</div>
-        <div class="modal-content" id="modal-body">
-            </div>
+        <div class="modal-content" id="modal-body"></div>
     </div>
 
     <script>
@@ -123,19 +119,31 @@
 
         const products = [
             {
-                id: 1, name: "Blue Elephant 🐘", price: "40€",
-                tag: "Espagne 🇪🇸", img: "IMG_6840.png",
-                desc: "Une génétique d'exception. Un goût terreux et puissant, idéal pour les amateurs d'Indica pure."
+                id: 1, 
+                name: "Beuh Bleu Éléphant 🐘", 
+                tag: "Espagne 🇪🇸", 
+                img: "IMG_6840.png",
+                basePrice: "10€",
+                desc: "Indica dominante\nGénétique : issue de Blue Dream × Elephant Bud\nOrigine : Espagne\n\nEffets :\n• Relaxation physique profonde (effet stone)\n• Sensation d'euphorie et de calme\n• Peut garder une légère clarté mentale au début\n• Stimule l'appétit",
+                variants: ["1,2g - 10€", "2,5g - 20€"]
             },
             {
-                id: 2, name: "Super Mousseux", price: "20€",
-                tag: "Mousse 🧀", img: "IMG_6840.png",
-                desc: "Le classique indémodable. Texture mousseuse, sucrée en bouche et un effet relaxant immédiat."
+                id: 2, 
+                name: "Super Mousseux 🇲🇦", 
+                tag: "Mousse 🧀", 
+                img: "IMG_6840.png",
+                basePrice: "10€",
+                desc: "Le jaune mousseux sucré par excellence.\nOrigine : Provence Maroc\n\nEffets :\n• Détente corporelle intense\n• Goût sucré et onctueux en bouche\n• Idéal pour les fumeurs réguliers cherchant un bon rapport qualité/prix.",
+                variants: ["2,2g - 10€", "4,5g - 20€", "10g - 40€", "25g - 90€", "50g - 150€", "100g - 240€"]
             },
             {
-                id: 3, name: "Filtre x3 Static", price: "50€",
-                tag: "Static 💎", img: "IMG_6840.png",
-                desc: "Le haut de gamme absolu. Filtration à froid 'Static Sift' pour une pureté et une puissance inégalées."
+                id: 3, 
+                name: "Static Forbidden 🇲🇦", 
+                tag: "Static 💎", 
+                img: "IMG_6840.png",
+                basePrice: "10€",
+                desc: "Haut de gamme - Filtration à froid.\nQualité supérieure filtrée pour une pureté maximale.\n\nEffets :\n• Puissance extrême dès les premières taffes\n• Arôme complexe et raffiné\n• Effet longue durée.",
+                variants: ["1g - 10€", "2,2g - 20€", "6g - 50€", "10g - 80€", "25g - 160€"]
             }
         ];
 
@@ -149,7 +157,7 @@
                         <div class="card-body">
                             <span class="card-tag">${p.tag}</span>
                             <div class="card-title">${p.name}</div>
-                            <div class="card-price">À partir de ${p.price}</div>
+                            <div class="card-price">À partir de ${p.basePrice}</div>
                             <button class="buy-btn" onclick="openProduct(${p.id})">Voir produit</button>
                         </div>
                     </div>`;
@@ -159,14 +167,15 @@
         function openProduct(id) {
             const p = products.find(item => item.id === id);
             const modalBody = document.getElementById('modal-body');
+            let options = p.variants.map(v => `<option value="${v}">${v}</option>`).join('');
+            
             modalBody.innerHTML = `
                 <div class="modal-img" style="background-image: url('${p.img}')"></div>
-                <h2 style="color:var(--gold)">${p.name}</h2>
-                <p class="modal-desc">${p.desc}</p>
-                <select class="variant-select">
-                    <option>Sélectionnez une variante</option>
-                    <option>5g - ${p.price}</option>
-                    <option>10g - Voir tarif</option>
+                <h2 style="color:var(--gold); margin-bottom:10px;">${p.name}</h2>
+                <div class="modal-desc">${p.desc}</div>
+                <select class="variant-select" id="selected-variant">
+                    <option disabled selected>Choisissez votre quantité</option>
+                    ${options}
                 </select>
                 <button class="enter-btn" style="margin-top:30px; width:100%" onclick="addToCart('${p.name}')">Ajouter au panier</button>
             `;
@@ -185,8 +194,13 @@
         }
 
         function addToCart(name) {
-            tg.sendData("Commande: " + name);
-            tg.showConfirm("Ajouter " + name + " au panier ?", (ok) => {
+            const variant = document.getElementById('selected-variant').value;
+            if(variant === "Choisissez votre quantité") {
+                tg.showAlert("Veuillez sélectionner une quantité.");
+                return;
+            }
+            tg.sendData("Commande: " + name + " (" + variant + ")");
+            tg.showConfirm("Ajouter " + name + " (" + variant + ") au panier ?", (ok) => {
                 if(ok) closeModal();
             });
         }
